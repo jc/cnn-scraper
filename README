@@ -1,0 +1,10 @@
+Usage: fetch_cnn.py [options] <sources, either feeds, cnn archive urls, cnn story urls, files containing cnn story urls>
+
+Options:
+  -h, --help            show this help message and exit
+  -d <delay in seconds>, --delay=<delay in seconds>
+                        delay in seconds before checking feeds
+  -o <output directory>, --output=<output directory>
+                        output directory
+  -a, --archive         download from cnn archives
+  -u, --urls            download from urls directly
