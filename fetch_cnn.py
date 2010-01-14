@@ -10,9 +10,12 @@ import random
 from optparse import OptionParser
 
 try:
-    import curate #we use curate to annotate the text for later
+    import curate
 except ImportError:
     curate = False
+
+#disable curating
+curate = False
 
 import feedparser
 from BeautifulSoup import BeautifulSoup, Comment, Tag
@@ -73,18 +76,22 @@ def scrape_text(content):
                 continue
             if item.string.strip().endswith('(CNN)'):
                 continue
-        if item.string.strip() == "":
+        #if all blank space but more than one character
+        if item.string.strip() == "" and len(item.string) > 1:
             continue
         if item.string.strip().startswith('--'):
             item.string = item.string.strip()[2:]
-        result.append(item.string.strip())
-    return " ".join(result)
+        result.append(item.string)
+    return "".join(result)
 
 def feed_collect_urls_with_time(feed):
     document = feedparser.parse(feed)
     result = [(resolve_cnn_url(entry.link), entry.updated_parsed) for entry in document.entries]
     return result
 
+
+
+    
 def build_document(id, title, highlights, content, source):
     result = ['<doc id="%s">' % id]
     result.append('<title>%s</title>' % title)
